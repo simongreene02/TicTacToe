@@ -59,6 +59,165 @@ public class GridTest {
 		new Grid(10);
 	}
 	
+	@Test
+	public void checkForHorizontalVictory() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(0, 1, 'x');
+		assertTrue(grid.checkForHorizontalVictory('x'));
+	}
+	
+	@Test
+	public void checkForHorizontalVictory_wrongChar() {
+		grid.setCellAt(0, 0, 'o');
+		grid.setCellAt(0, 1, 'o');
+		assertFalse(grid.checkForHorizontalVictory('x'));
+	}
+	
+	@Test
+	public void checkForHorizontalVictory_wrongAlignment() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(1, 0, 'x');
+		assertFalse(grid.checkForHorizontalVictory('x'));
+	}
+	
+
+	@Test
+	public void checkForHorizontalVictory_oneO_oneX() {
+		grid.setCellAt(0, 0, 'o');
+		grid.setCellAt(0, 1, 'x');
+		assertFalse(grid.checkForHorizontalVictory('x'));
+	}
+	
+
+	@Test
+	public void checkForHorizontalVictory_oneX_oneO() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(0, 1, 'o');
+		assertFalse(grid.checkForHorizontalVictory('x'));
+	}
+	
+	@Test
+	public void checkForVerticalVictory() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(1, 0, 'x');
+		assertTrue(grid.checkForVerticalVictory('x'));
+	}
+	
+	@Test
+	public void checkForVerticalVictory_wrongChar() {
+		grid.setCellAt(0, 0, 'o');
+		grid.setCellAt(1, 0, 'o');
+		assertFalse(grid.checkForVerticalVictory('x'));
+	}
+	
+	@Test
+	public void checkForVerticalVictory_wrongAlignment() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(0, 1, 'x');
+		assertFalse(grid.checkForVerticalVictory('x'));
+	}
+	
+
+	@Test
+	public void checkForVerticalVictory_oneO_oneX() {
+		grid.setCellAt(0, 0, 'o');
+		grid.setCellAt(1, 0, 'x');
+		assertFalse(grid.checkForVerticalVictory('x'));
+	}
+	
+
+	@Test
+	public void checkForVerticalVictory_oneX_oneO() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(1, 0, 'o');
+		assertFalse(grid.checkForVerticalVictory('x'));
+	}
+	
+	@Test
+	public void checkForDiagonalVictoryBackSlash() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(1, 1, 'x');
+		assertTrue(grid.checkForDiagonalVictoryBackSlash('x'));
+	}
+	
+	@Test
+	public void checkForDiagonalVictoryBackSlash_wrongChar() {
+		grid.setCellAt(0, 0, 'o');
+		grid.setCellAt(1, 1, 'o');
+		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+	}
+	
+	@Test
+	public void checkForDiagonalVictoryBackSlash_wrongAlignment() {
+		grid.setCellAt(1, 0, 'x');
+		grid.setCellAt(0, 1, 'x');
+		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+	}
+	
+
+	@Test
+	public void checkForDiagonalVictoryBackSlash_oneO_oneX() {
+		grid.setCellAt(0, 0, 'o');
+		grid.setCellAt(1, 1, 'x');
+		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+	}
+	
+
+	@Test
+	public void checkForDiagonalVictoryBackSlash_oneX_oneO() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(1, 1, 'o');
+		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+	}
+	
+	@Test
+	public void checkForDiagonalVictoryForwardSlash() {
+		grid.setCellAt(0, 1, 'x');
+		grid.setCellAt(1, 0, 'x');
+		assertTrue(grid.checkForDiagonalVictoryForwardSlash('x'));
+	}
+	
+	@Test
+	public void checkForDiagonalVictoryForwardSlash_wrongChar() {
+		grid.setCellAt(0, 1, 'o');
+		grid.setCellAt(1, 0, 'o');
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+	}
+	
+	@Test
+	public void checkForDiagonalVictoryForwardSlash_wrongAlignment() {
+		grid.setCellAt(0, 0, 'x');
+		grid.setCellAt(1, 1, 'x');
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+	}
+	
+
+	@Test
+	public void checkForDiagonalVictoryForwardSlash_oneO_oneX() {
+		grid.setCellAt(0, 1, 'o');
+		grid.setCellAt(1, 0, 'x');
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+	}
+	
+
+	@Test
+	public void checkForDiagonalVictoryForwardSlash_oneX_oneO() {
+		grid.setCellAt(0, 1, 'x');
+		grid.setCellAt(1, 0, 'o');
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+	}
+	
+	@Test
+	public void checkForVictory_allFilled() {
+		grid = new Grid(3);
+		grid.checkForVictory(' ');
+	}
+	
+	@Test
+	public void checkForVictory_allEmpty() {
+		grid = new Grid(3);
+		grid.checkForVictory('o');
+	}
 	
 	
 
