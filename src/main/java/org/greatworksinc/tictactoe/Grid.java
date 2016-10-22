@@ -9,6 +9,14 @@ public class Grid {
 	private final char[][] board;
 	
 
+	public static int getMinSize() {
+		return MIN_SIZE;
+	}
+
+	public static int getMaxSize() {
+		return MAX_SIZE;
+	}
+
 	public Grid(int size) {
 		if (size < MIN_SIZE) {
 			throw new IllegalArgumentException("All grids created must have a size of at least " + MIN_SIZE);
@@ -57,6 +65,11 @@ public class Grid {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param playerChar
+	 * @return {@code true} when the character used as a argument has met a winning condition, otherwise {@code false} 
+	 */
 	public boolean checkForVictory(char playerChar) {
 		return checkForDiagonalVictoryBackSlash(playerChar) 
 				|| checkForDiagonalVictoryForwardSlash(playerChar)
@@ -113,6 +126,10 @@ public class Grid {
 			}
 		}
 		return true;
+	}
+
+	public static boolean isValidSize(int size) {
+		return size <= MAX_SIZE && size >= MIN_SIZE;
 	}
 
 }

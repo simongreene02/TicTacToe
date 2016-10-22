@@ -1,6 +1,9 @@
 package org.greatworksinc.tictactoe;
 
-import static org.junit.Assert.*;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -217,6 +220,21 @@ public class GridTest {
 	public void checkForVictory_allEmpty() {
 		grid = new Grid(3);
 		grid.checkForVictory('o');
+	}
+	
+	@Test
+	public void isValidSize_positiveInput() {
+		assertThat(Grid.isValidSize((Grid.getMaxSize() - Grid.getMinSize()) / 2 + Grid.getMinSize())).isTrue();
+	}
+	
+	@Test
+	public void isValidSize_smallInput() {
+		assertThat(Grid.isValidSize(Grid.getMinSize() - 1)).isFalse();
+	}
+	
+	@Test
+	public void isValidSize_bigInput() {
+		assertThat(Grid.isValidSize(Grid.getMaxSize() + 1)).isFalse();
 	}
 	
 	

@@ -7,9 +7,13 @@ import com.google.common.annotations.VisibleForTesting;
 
 public class UserInterface {
 
+	enum UserableChar {
+		O, X;		
+	}
+	private static final char SPACE = ' ';
 	private final Scanner scanner;
-	private char playerChar;
-	private char computerChar;
+	private UserableChar playerChar;
+	private UserableChar computerChar;
 	private Grid grid;
 
 	public UserInterface() {
@@ -21,25 +25,45 @@ public class UserInterface {
 	}
 
 	public void play() {
-		playerChar = ' ';
-		while (playerChar == ' ') {
+		int size = 0;
+		while (!Grid.isValidSize(size)) {
+			System.out.println(String.format(
+					"How large should the board be? Please enter a value from %d to %d (inclusive)",
+					Grid.getMinSize(), Grid.getMaxSize()));
+			size = scanner.nextInt();
+		}
+		grid = new Grid(size);
+		while (playerChar == null) {
 			System.out.println("Which character (O or X) would you like to play?");
 			String input = scanner.nextLine();
 
 			playerChar = validatePlayerChar(input);
 		}
-		// if (playerChar)
-
+		switch(playerChar) {
+		case O:
+			computerChar = UserableChar.X;
+			break;
+		case X:
+			computerChar = UserableChar.O;
+			break;				
+		}
+		//while
+		
 	}
 
+	/**
+	 * Return the enum if valid, otherwise return null
+	 * @param input
+	 * @return
+	 */
 	@VisibleForTesting
-	static char validatePlayerChar(String input) {
+	static UserableChar validatePlayerChar(String input) {
 		if (input.length() == 1) {
-			String lowerChar = input.toLowerCase();
-			if (lowerChar.equals("o") || lowerChar.equals("x")) {
-				return input.charAt(0);
+			String upperChar = input.toUpperCase();
+			if (upperChar.equals("O") || upperChar.equals("X")) {
+				return UserableChar.valueOf(input);
 			}
 		}
-		return ' ';
+		return null;
 	}
 }
