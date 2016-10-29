@@ -33,12 +33,14 @@ public class Grid {
 		this.size = size;
 	}
 
-	public char getCellAt(int row, int col) {
-		validate(row, col);
-		return board[row][col];
+	public char getCellAt(Location location) {
+		validate(location.getX(), location.getY());
+		return board[location.getX()][location.getY()];
 	}
 
-	public boolean setCellAt(int row, int col, char playerChar) {
+	public boolean setCellAt(Location location, char playerChar) {
+		int row = location.getX();
+		int col = location.getY();
 		validate(row, col);
 		if (board[row][col] == ' ') {
 			board[row][col] = playerChar;

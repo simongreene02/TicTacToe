@@ -45,8 +45,13 @@ public class UserInterface {
 			break;
 		case X:
 			computerChar = UserableChar.O;
-			break;				
+			break;
+		default:
+			throw new UnsupportedOperationException(
+					String.format("Player Character value (%s) not allowed", playerChar));
 		}
+		
+		//All vars are initalized
 		//while
 		
 	}
@@ -61,7 +66,7 @@ public class UserInterface {
 		if (input.length() == 1) {
 			String upperChar = input.toUpperCase();
 			if (upperChar.equals("O") || upperChar.equals("X")) {
-				return UserableChar.valueOf(input);
+				return UserableChar.valueOf(upperChar);
 			}
 		}
 		return null;
