@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.greatworksinc.tictactoe.UserInterface.UserableChar;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class GridTest {
 	}
 	@Test
 	public void getCellAt() {
-		assertEquals(' ', grid.getCellAt(Location.with(0, 0)));
+		assertThat(grid.getCellAt(Location.with(0, 0))).isNull();
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -33,13 +34,13 @@ public class GridTest {
 	
 	@Test
 	public void setCellAt() {
-		assertTrue(grid.setCellAt(Location.with(0, 0), 'X'));
+		assertTrue(grid.setCellAt(Location.with(0, 0), UserableChar.X));
 	}
 	
 	@Test
 	public void setCellAt_nonEmptyLocation() {
-		assertTrue(grid.setCellAt(Location.with(0, 0), 'O'));
-		assertFalse(grid.setCellAt(Location.with(0, 0), 'X'));
+		assertTrue(grid.setCellAt(Location.with(0, 0), UserableChar.O));
+		assertFalse(grid.setCellAt(Location.with(0, 0), UserableChar.X));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -64,162 +65,162 @@ public class GridTest {
 	
 	@Test
 	public void checkForHorizontalVictory() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(0, 1), 'x');
-		assertTrue(grid.checkForHorizontalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(0, 1), UserableChar.X);
+		assertTrue(grid.checkForHorizontalVictory(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForHorizontalVictory_wrongChar() {
-		grid.setCellAt(Location.with(0, 0), 'o');
-		grid.setCellAt(Location.with(0, 1), 'o');
-		assertFalse(grid.checkForHorizontalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.O);
+		grid.setCellAt(Location.with(0, 1), UserableChar.O);
+		assertFalse(grid.checkForHorizontalVictory(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForHorizontalVictory_wrongAlignment() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(1, 0), 'x');
-		assertFalse(grid.checkForHorizontalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(1, 0), UserableChar.X);
+		assertFalse(grid.checkForHorizontalVictory(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForHorizontalVictory_oneO_oneX() {
-		grid.setCellAt(Location.with(0, 0), 'o');
-		grid.setCellAt(Location.with(0, 1), 'x');
-		assertFalse(grid.checkForHorizontalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.O);
+		grid.setCellAt(Location.with(0, 1), UserableChar.X);
+		assertFalse(grid.checkForHorizontalVictory(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForHorizontalVictory_oneX_oneO() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(0, 1), 'o');
-		assertFalse(grid.checkForHorizontalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(0, 1), UserableChar.O);
+		assertFalse(grid.checkForHorizontalVictory(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForVerticalVictory() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(1, 0), 'x');
-		assertTrue(grid.checkForVerticalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(1, 0), UserableChar.X);
+		assertTrue(grid.checkForVerticalVictory(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForVerticalVictory_wrongChar() {
-		grid.setCellAt(Location.with(0, 0), 'o');
-		grid.setCellAt(Location.with(1, 0), 'o');
-		assertFalse(grid.checkForVerticalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.O);
+		grid.setCellAt(Location.with(1, 0), UserableChar.O);
+		assertFalse(grid.checkForVerticalVictory(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForVerticalVictory_wrongAlignment() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(0, 1), 'x');
-		assertFalse(grid.checkForVerticalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(0, 1), UserableChar.X);
+		assertFalse(grid.checkForVerticalVictory(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForVerticalVictory_oneO_oneX() {
-		grid.setCellAt(Location.with(0, 0), 'o');
-		grid.setCellAt(Location.with(1, 0), 'x');
-		assertFalse(grid.checkForVerticalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.O);
+		grid.setCellAt(Location.with(1, 0), UserableChar.X);
+		assertFalse(grid.checkForVerticalVictory(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForVerticalVictory_oneX_oneO() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(1, 0), 'o');
-		assertFalse(grid.checkForVerticalVictory('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(1, 0), UserableChar.O);
+		assertFalse(grid.checkForVerticalVictory(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForDiagonalVictoryBackSlash() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(1, 1), 'x');
-		assertTrue(grid.checkForDiagonalVictoryBackSlash('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(1, 1), UserableChar.X);
+		assertTrue(grid.checkForDiagonalVictoryBackSlash(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForDiagonalVictoryBackSlash_wrongChar() {
-		grid.setCellAt(Location.with(0, 0), 'o');
-		grid.setCellAt(Location.with(1, 1), 'o');
-		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.O);
+		grid.setCellAt(Location.with(1, 1), UserableChar.O);
+		assertFalse(grid.checkForDiagonalVictoryBackSlash(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForDiagonalVictoryBackSlash_wrongAlignment() {
-		grid.setCellAt(Location.with(1, 0), 'x');
-		grid.setCellAt(Location.with(0, 1), 'x');
-		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+		grid.setCellAt(Location.with(1, 0), UserableChar.X);
+		grid.setCellAt(Location.with(0, 1), UserableChar.X);
+		assertFalse(grid.checkForDiagonalVictoryBackSlash(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForDiagonalVictoryBackSlash_oneO_oneX() {
-		grid.setCellAt(Location.with(0, 0), 'o');
-		grid.setCellAt(Location.with(1, 1), 'x');
-		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.O);
+		grid.setCellAt(Location.with(1, 1), UserableChar.X);
+		assertFalse(grid.checkForDiagonalVictoryBackSlash(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForDiagonalVictoryBackSlash_oneX_oneO() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(1, 1), 'o');
-		assertFalse(grid.checkForDiagonalVictoryBackSlash('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(1, 1), UserableChar.O);
+		assertFalse(grid.checkForDiagonalVictoryBackSlash(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForDiagonalVictoryForwardSlash() {
-		grid.setCellAt(Location.with(0, 1), 'x');
-		grid.setCellAt(Location.with(1, 0), 'x');
-		assertTrue(grid.checkForDiagonalVictoryForwardSlash('x'));
+		grid.setCellAt(Location.with(0, 1), UserableChar.X);
+		grid.setCellAt(Location.with(1, 0), UserableChar.X);
+		assertTrue(grid.checkForDiagonalVictoryForwardSlash(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForDiagonalVictoryForwardSlash_wrongChar() {
-		grid.setCellAt(Location.with(0, 1), 'o');
-		grid.setCellAt(Location.with(1, 0), 'o');
-		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+		grid.setCellAt(Location.with(0, 1), UserableChar.O);
+		grid.setCellAt(Location.with(1, 0), UserableChar.O);
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForDiagonalVictoryForwardSlash_wrongAlignment() {
-		grid.setCellAt(Location.with(0, 0), 'x');
-		grid.setCellAt(Location.with(1, 1), 'x');
-		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+		grid.setCellAt(Location.with(0, 0), UserableChar.X);
+		grid.setCellAt(Location.with(1, 1), UserableChar.X);
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForDiagonalVictoryForwardSlash_oneO_oneX() {
-		grid.setCellAt(Location.with(0, 1), 'o');
-		grid.setCellAt(Location.with(1, 0), 'x');
-		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+		grid.setCellAt(Location.with(0, 1), UserableChar.O);
+		grid.setCellAt(Location.with(1, 0), UserableChar.X);
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash(UserableChar.X));
 	}
 	
 
 	@Test
 	public void checkForDiagonalVictoryForwardSlash_oneX_oneO() {
-		grid.setCellAt(Location.with(0, 1), 'x');
-		grid.setCellAt(Location.with(1, 0), 'o');
-		assertFalse(grid.checkForDiagonalVictoryForwardSlash('x'));
+		grid.setCellAt(Location.with(0, 1), UserableChar.X);
+		grid.setCellAt(Location.with(1, 0), UserableChar.O);
+		assertFalse(grid.checkForDiagonalVictoryForwardSlash(UserableChar.X));
 	}
 	
 	@Test
 	public void checkForVictory_allFilled() {
 		grid = new Grid(3);
-		grid.checkForVictory(' ');
+		grid.checkForVictory(null);
 	}
 	
 	@Test
 	public void checkForVictory_allEmpty() {
 		grid = new Grid(3);
-		grid.checkForVictory('o');
+		grid.checkForVictory(UserableChar.O);
 	}
 	
 	@Test

@@ -55,6 +55,16 @@ public class UserInterface {
 		//while
 		
 	}
+	
+	@VisibleForTesting void playerMove() {
+		grid.printBoard();
+		System.out.println();
+		System.out.println("?");
+		int x = scanner.nextInt();
+		System.out.println("?");
+		int y = scanner.nextInt();
+		grid.setCellAt(Location.with(x, y), playerChar);
+	}
 
 	/**
 	 * Return the enum if valid, otherwise return null
