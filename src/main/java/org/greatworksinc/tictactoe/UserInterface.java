@@ -17,10 +17,10 @@ public class UserInterface {
 	private Grid grid;
 
 	public UserInterface() {
-		this(System.in);
+		scanner = new Scanner(System.in);
 	}
 
-	public UserInterface(InputStream input) {
+	@VisibleForTesting UserInterface(String input) {
 		scanner = new Scanner(input);
 	}
 
@@ -38,6 +38,7 @@ public class UserInterface {
 			String input = scanner.nextLine();
 
 			playerChar = validatePlayerChar(input);
+			System.out.println(playerChar);
 		}
 		switch(playerChar) {
 		case O:
@@ -51,19 +52,29 @@ public class UserInterface {
 					String.format("Player Character value (%s) not allowed", playerChar));
 		}
 		
-		//All vars are initalized
-		//while
+		System.out.println("End of method (I think)");
 		
+//		while(noOneHasWon) {
+//			if (playermove = true) {
+//				break
+//			}
+//			if (!victory or tie) {
+//				computerMoves
+//			}
+//		}
 	}
 	
-	@VisibleForTesting void playerMove() {
+	@VisibleForTesting boolean playerMove() {
 		grid.printBoard();
 		System.out.println();
-		System.out.println("?");
-		int x = scanner.nextInt();
-		System.out.println("?");
-		int y = scanner.nextInt();
-		grid.setCellAt(Location.with(x, y), playerChar);
+		System.out.println("Enter coordinate:");
+		//Input can be two numbers seperated by a space or comma, uppercase Q, or lowercase q
+		String input = scanner.nextLine();
+		if (input.equalsIgnoreCase("Q")) {
+			return false;
+		}
+		
+		grid.setCellAt(Location.with(input), playerChar);
 	}
 
 	/**
@@ -80,5 +91,17 @@ public class UserInterface {
 			}
 		}
 		return null;
+	}
+
+	@VisibleForTesting UserableChar getPlayerChar() {
+		return playerChar;
+	}
+
+	@VisibleForTesting UserableChar getComputerChar() {
+		return computerChar;
+	}
+
+	@VisibleForTesting int getGridSize() {
+		return grid.size();
 	}
 }

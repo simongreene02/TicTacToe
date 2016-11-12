@@ -136,4 +136,10 @@ public class Grid {
 		return size <= MAX_SIZE && size >= MIN_SIZE;
 	}
 
+	public int size() {
+		return size;
+	}
+	
+	
+
 }

@@ -42,6 +42,46 @@ public class UserInterfaceTest {
 	public void validatePlayerChar_wrongChar() {
 		assertThat(UserInterface.validatePlayerChar("A")).isNull();
 	}
+	
+	@Test
+	public void play_validConfig() {
+		String input = "5\nO";
+		UserInterface userInterface = new UserInterface(input);
+		userInterface.play();
+		assertThat(userInterface.getGridSize()).isEqualTo(5);
+		assertThat(userInterface.getPlayerChar()).isEqualTo(UserInterface.UserableChar.O);
+		assertThat(userInterface.getComputerChar()).isEqualTo(UserInterface.UserableChar.X);
+	}
+	
+	@Test
+	public void play_smallGrid() {
+		String input = "1\n5\nO";
+		UserInterface userInterface = new UserInterface(input);
+		userInterface.play();
+		assertThat(userInterface.getGridSize()).isEqualTo(5);
+		assertThat(userInterface.getPlayerChar()).isEqualTo(UserInterface.UserableChar.O);
+		assertThat(userInterface.getComputerChar()).isEqualTo(UserInterface.UserableChar.X);
+	}
+	
+	@Test
+	public void play_largeGrid() {
+		String input = "100\n5\nO";
+		UserInterface userInterface = new UserInterface(input);
+		userInterface.play();
+		assertThat(userInterface.getGridSize()).isEqualTo(5);
+		assertThat(userInterface.getPlayerChar()).isEqualTo(UserInterface.UserableChar.O);
+		assertThat(userInterface.getComputerChar()).isEqualTo(UserInterface.UserableChar.X);
+	}
+	
+	@Test
+	public void play_badChar() {
+		String input = "5\nA\nx";
+		UserInterface userInterface = new UserInterface(input);
+		userInterface.play();
+		assertThat(userInterface.getGridSize()).isEqualTo(5);
+		assertThat(userInterface.getPlayerChar()).isEqualTo(UserInterface.UserableChar.X);
+		assertThat(userInterface.getComputerChar()).isEqualTo(UserInterface.UserableChar.O);
+	}
 
 
 }
