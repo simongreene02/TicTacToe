@@ -21,8 +21,8 @@ public class Location {
 		// TODO Auto-generated method stub
 		String[] result = input.split(",");
 		if (result.length == 2) {
-			Integer.parseInt(result[0]);
+			return with(Integer.parseInt(result[0]), Integer.parseInt(result[1]));
 		}
-		return null;
+		throw new IllegalArgumentException("Bad input: " + input);
 	}
 }

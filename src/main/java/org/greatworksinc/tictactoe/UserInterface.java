@@ -8,8 +8,9 @@ import com.google.common.annotations.VisibleForTesting;
 public class UserInterface {
 
 	enum UserableChar {
-		O, X;		
+		O, X;
 	}
+
 	private static final char SPACE = ' ';
 	private final Scanner scanner;
 	private UserableChar playerChar;
@@ -20,16 +21,17 @@ public class UserInterface {
 		scanner = new Scanner(System.in);
 	}
 
-	@VisibleForTesting UserInterface(String input) {
+	@VisibleForTesting
+	UserInterface(String input) {
 		scanner = new Scanner(input);
 	}
 
 	public void play() {
 		int size = 0;
 		while (!Grid.isValidSize(size)) {
-			System.out.println(String.format(
-					"How large should the board be? Please enter a value from %d to %d (inclusive)",
-					Grid.getMinSize(), Grid.getMaxSize()));
+			System.out.println(
+					String.format("How large should the board be? Please enter a value from %d to %d (inclusive)",
+							Grid.getMinSize(), Grid.getMaxSize()));
 			size = scanner.nextInt();
 		}
 		grid = new Grid(size);
@@ -40,7 +42,7 @@ public class UserInterface {
 			playerChar = validatePlayerChar(input);
 			System.out.println(playerChar);
 		}
-		switch(playerChar) {
+		switch (playerChar) {
 		case O:
 			computerChar = UserableChar.X;
 			break;
@@ -51,34 +53,51 @@ public class UserInterface {
 			throw new UnsupportedOperationException(
 					String.format("Player Character value (%s) not allowed", playerChar));
 		}
-		
-		System.out.println("End of method (I think)");
-		
-//		while(noOneHasWon) {
-//			if (playermove = true) {
-//				break
-//			}
-//			if (!victory or tie) {
-//				computerMoves
-//			}
-//		}
-	}
-	
-	@VisibleForTesting boolean playerMove() {
-		grid.printBoard();
-		System.out.println();
-		System.out.println("Enter coordinate:");
-		//Input can be two numbers seperated by a space or comma, uppercase Q, or lowercase q
-		String input = scanner.nextLine();
-		if (input.equalsIgnoreCase("Q")) {
-			return false;
+
+		while (!grid.checkForVictory(playerChar) && !grid.checkForVictory(computerChar) && !grid.isFull()) {
+			if (!playerMove()) {
+				break;
+			}
+			if (!grid.checkForVictory(playerChar) && !grid.isFull()) {
+				computerMove();
+			}
 		}
-		
-		grid.setCellAt(Location.with(input), playerChar);
+	}
+
+	@VisibleForTesting
+	boolean playerMove() {
+		grid.printBoard();
+		String input;
+		do {
+			System.out.println();
+			System.out.println("Enter coordinate:");
+			// Input can be two numbers seperated by a space or comma, uppercase
+			// Q, or lowercase q
+			input = scanner.nextLine();
+			if (input.equalsIgnoreCase("Q")) {
+				return false;
+			}
+
+		} while (!grid.setCellAt(Location.with(input), playerChar));
+		return true;
+	}
+
+	@VisibleForTesting
+	boolean computerMove() {
+		for (int x = 0; x < grid.size(); x++) {
+			for (int y = 0; y < grid.size(); y++) {
+				Location location = Location.with(x, y);
+				if (grid.setCellAt(location, computerChar)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
 	 * Return the enum if valid, otherwise return null
+	 * 
 	 * @param input
 	 * @return
 	 */
@@ -93,15 +112,29 @@ public class UserInterface {
 		return null;
 	}
 
-	@VisibleForTesting UserableChar getPlayerChar() {
+	@VisibleForTesting
+	UserableChar getPlayerChar() {
 		return playerChar;
 	}
 
-	@VisibleForTesting UserableChar getComputerChar() {
+	@VisibleForTesting
+	UserableChar getComputerChar() {
 		return computerChar;
 	}
 
-	@VisibleForTesting int getGridSize() {
+	@VisibleForTesting
+	int getGridSize() {
 		return grid.size();
+	}
+	
+	@VisibleForTesting
+	UserableChar getWinner() {
+		if (grid.checkForVictory(playerChar)) {
+			return playerChar;
+		}
+		if (grid.checkForVictory(computerChar)) {
+			return computerChar;
+		}
+		return null;
 	}
 }

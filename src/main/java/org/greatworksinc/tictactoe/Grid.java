@@ -1,5 +1,7 @@
 package org.greatworksinc.tictactoe;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.greatworksinc.tictactoe.UserInterface.UserableChar;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -9,6 +11,7 @@ public class Grid {
 	private static final int MAX_SIZE = 5;
 	private final int size;
 	private final UserableChar[][] board;
+	private AtomicInteger availableSpaces;
 	
 
 	public static int getMinSize() {
@@ -33,6 +36,7 @@ public class Grid {
 			}
 		}
 		this.size = size;
+		availableSpaces = new AtomicInteger(size * size);
 	}
 
 	public UserableChar getCellAt(Location location) {
@@ -46,6 +50,7 @@ public class Grid {
 		validate(row, col);
 		if (board[row][col] == null) {
 			board[row][col] = playerChar;
+			availableSpaces.decrementAndGet();
 			return true;
 		}
 		return false;
@@ -138,6 +143,10 @@ public class Grid {
 
 	public int size() {
 		return size;
+	}
+	
+	public boolean isFull() {
+		return availableSpaces.get() <= 0;
 	}
 	
 	
