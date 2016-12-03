@@ -59,7 +59,11 @@ public class Grid {
 	public void printBoard() {
 		for (UserableChar[] row : board) {
 			for (UserableChar cell : row) {
+				if (cell == null) {
+					System.out.print("+");
+				} else {
 				System.out.print(cell);
+				}
 			}
 			System.out.println();
 		}

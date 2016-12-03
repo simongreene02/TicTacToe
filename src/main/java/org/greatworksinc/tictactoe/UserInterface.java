@@ -32,15 +32,13 @@ public class UserInterface {
 			System.out.println(
 					String.format("How large should the board be? Please enter a value from %d to %d (inclusive)",
 							Grid.getMinSize(), Grid.getMaxSize()));
-			size = scanner.nextInt();
+			size = Integer.parseInt(scanner.nextLine());
 		}
 		grid = new Grid(size);
 		while (playerChar == null) {
 			System.out.println("Which character (O or X) would you like to play?");
 			String input = scanner.nextLine();
-
 			playerChar = validatePlayerChar(input);
-			System.out.println(playerChar);
 		}
 		switch (playerChar) {
 		case O:
@@ -61,6 +59,16 @@ public class UserInterface {
 			if (!grid.checkForVictory(playerChar) && !grid.isFull()) {
 				computerMove();
 			}
+		}
+		grid.printBoard();
+		if (grid.checkForVictory(playerChar)) {
+			System.out.println("Player Wins");
+		} else if (grid.checkForVictory(computerChar)) {
+			System.out.println("Computer Wins");
+		} else if (grid.isFull()) {
+			System.out.println("It's a tie");
+		} else {
+			System.out.println("Quitting Game");
 		}
 	}
 
